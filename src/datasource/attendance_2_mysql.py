@@ -6,11 +6,9 @@ import sys, os
 class Attendance2Mysql:
     mydb = None
     mycursor = None
-    config = None
     path = None
 
     def init(self, path):
-        self.config = dotenv_values(".env")
         self.path = path
         self.mydb = self.open_connection()
         self.mycursor = self.mydb.cursor(dictionary=True)
@@ -18,10 +16,10 @@ class Attendance2Mysql:
         
     def open_connection(self):
         mydb=mysql.connector.connect(
-            host=self.config["MYSQL_HOST"],
-            user=self.config["MYSQL_USER"],
-            password=self.config["MYSQL_PASSWORD"],
-            database=self.config["MYSQL_DATABASE"]
+            host=os.environ["MYSQL_HOST"],
+            user="root",
+            password=os.environ["MYSQL_ROOT_PASSWORD"],
+            database=os.environ["MYSQL_DATABASE"]
         )
         return mydb
 
