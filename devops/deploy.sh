@@ -7,8 +7,16 @@ if [[ "$env" != "test" &&  "$env" != "prod" ]]; then
 	exit 1
 fi
 
-scp docker-compose.yaml ec2-user@${env}:~/.
+main () {
+	scp docker-compose.yaml ec2-user@${env}:~/.
+	ssh ec2-user@${env} docker pull valeron12345/flask_app:latest
+	ssh ec2-user@${env} docker-compose up -d
 
-if [ "$env" == "test" ]; then
-	scp devops/test.sh ec2-user@${env}:~/.
-fi
+	if [ "$env" == "test" ]; then
+		scp devops/test.sh ec2-user@${env}:~/.
+		sleep 10
+		ssh ec2-user@${env} ./test.sh
+	fi
+}
+
+main
