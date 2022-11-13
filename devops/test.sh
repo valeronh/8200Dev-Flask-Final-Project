@@ -16,7 +16,7 @@ main() {
 	request "attendance" "Valery Khirin"
 	request "about" "Valery Khirin"
 	request "flow" "dockerization"
-	request "home" "Valery Khirin"
+	request "home" "calculation"
 
 	exit ${rc}
 }
